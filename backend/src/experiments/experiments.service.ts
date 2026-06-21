@@ -1,14 +1,23 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateVariantDto } from './dto/create-variant.dto';
+import {
+  VARIANT_GENERATOR,
+  type VariantGenerator,
+} from '../ai/variant-generator.interface';
 
 @Injectable()
 export class ExperimentsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    @Inject(VARIANT_GENERATOR)
+    private readonly generator: VariantGenerator,
+  ) {}
 
   async start(merchantId: string, productId: string) {
     const product = await this.prisma.product.findFirst({
@@ -86,5 +95,39 @@ export class ExperimentsService {
     return this.prisma.variant.create({
       data: { ...dto, experimentId, isControl: false },
     });
+  }
+
+  async generate(merchantId: string, experimentId: string, count: number) {
+    const experiment = await this.prisma.experiment.findFirst({
+      where: { id: experimentId, product: { merchantId } },
+      include: { variants: true },
+    });
+    if (!experiment) {
+      throw new NotFoundException('Experiment not found');
+    }
+    if (experiment.status !== 'running') {
+      throw new ConflictException('Experiment is not running');
+    }
+
+    const control =
+      experiment.variants.find((v) => v.isControl) ?? experiment.variants[0];
+    if (!control) {
+      throw new ConflictException('Experiment has no control variant');
+    }
+
+    const generated = await this.generator.generate(
+      {
+        title: control.title,
+        description: control.description,
+        price: Number(control.price),
+      },
+      count,
+    );
+
+    await this.prisma.variant.createMany({
+      data: generated.map((g) => ({ ...g, experimentId, isControl: false })),
+    });
+
+    return this.findOne(merchantId, experimentId);
   }
 }

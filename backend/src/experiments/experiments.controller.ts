@@ -13,6 +13,7 @@ import {
 } from '../auth/current-merchant.decorator';
 import { ExperimentsService } from './experiments.service';
 import { CreateVariantDto } from './dto/create-variant.dto';
+import { GenerateVariantsDto } from './dto/generate-variants.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller()
@@ -50,5 +51,14 @@ export class ExperimentsController {
     @Body() dto: CreateVariantDto,
   ) {
     return this.experiments.addVariant(merchant.id, id, dto);
+  }
+
+  @Post('experiments/:id/generate')
+  generate(
+    @CurrentMerchant() merchant: AuthMerchant,
+    @Param('id') id: string,
+    @Body() dto: GenerateVariantsDto,
+  ) {
+    return this.experiments.generate(merchant.id, id, dto.count ?? 3);
   }
 }
