@@ -61,4 +61,20 @@ export class ExperimentsController {
   ) {
     return this.experiments.generate(merchant.id, id, dto.count ?? 3);
   }
+
+  @Get('experiments/:id/stats')
+  stats(
+    @CurrentMerchant() merchant: AuthMerchant,
+    @Param('id') id: string,
+  ) {
+    return this.experiments.stats(merchant.id, id);
+  }
+
+  @Post('experiments/:id/evaluate')
+  evaluate(
+    @CurrentMerchant() merchant: AuthMerchant,
+    @Param('id') id: string,
+  ) {
+    return this.experiments.evaluate(merchant.id, id);
+  }
 }
