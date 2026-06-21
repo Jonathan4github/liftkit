@@ -1,0 +1,16 @@
+# Dependencies (downloaded code — never saved to git)
+node_modules/
+
+# Secrets (passwords, API keys — must NEVER go to git)
+.env
+.env.*
+!.env.example
+
+# Build output (generated automatically — no need to save)
+dist/
+build/
+.next/
+
+# Logs and OS noise
+*.log
+.DS_Store
