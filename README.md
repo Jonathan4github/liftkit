@@ -53,9 +53,9 @@ see the workflow.
 
 ## Roadmap
 
-- [ ] Project setup
-- [ ] Database model (products, experiments, variants, events)
-- [ ] Backend API (auth, products, experiments)
+- [x] Project setup
+- [x] Database model (products, experiments, variants, events)
+- [ ] Backend API (auth, products, experiments) — in progress
 - [ ] AI variant generation
 - [ ] Visitor assignment + event tracking + significance check
 - [ ] Frontend dashboard
