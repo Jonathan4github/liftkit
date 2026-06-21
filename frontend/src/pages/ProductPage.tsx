@@ -41,43 +41,48 @@ export function ProductPage() {
   const hasRunning = experiments.some((e) => e.status === 'running');
 
   return (
-    <div className="stack">
+    <div className="page">
       <Link to="/dashboard" className="back">
-        ← All products
+        ← Products
       </Link>
 
-      <section className="card">
-        <h2>{product ? product.title : 'Product'}</h2>
-        {product && (
-          <p className="muted">
-            ${product.price} - {product.description}
-          </p>
-        )}
-        <button onClick={start} disabled={busy || hasRunning}>
+      <section className="card product-hero">
+        <div>
+          <h1>{product ? product.title : 'Product'}</h1>
+          {product && (
+            <p className="muted">
+              ${product.price} · {product.description}
+            </p>
+          )}
+        </div>
+        <button className="primary" onClick={start} disabled={busy || hasRunning}>
           {hasRunning ? 'Experiment running' : busy ? '…' : 'Start new experiment'}
         </button>
-        {error && <div className="error">{error}</div>}
       </section>
 
-      <section className="card">
+      {error && <div className="error">{error}</div>}
+
+      <div className="page-head tight">
         <h2>Experiments</h2>
-        {experiments.length === 0 && (
-          <p className="muted">No experiments yet.</p>
-        )}
-        <ul className="list">
+      </div>
+
+      {experiments.length === 0 ? (
+        <div className="card empty">
+          <p className="muted">No experiments yet. Start one to generate variants.</p>
+        </div>
+      ) : (
+        <div className="exp-list">
           {experiments.map((e) => (
-            <li key={e.id}>
-              <Link to={`/experiments/${e.id}`} className="row-link">
-                <span>
-                  Generation {e.generation}{' '}
-                  <span className={`badge ${e.status}`}>{e.status}</span>
-                </span>
-                <span className="muted">{e.variants.length} variants</span>
-              </Link>
-            </li>
+            <Link key={e.id} to={`/experiments/${e.id}`} className="exp-row">
+              <span className="exp-gen">
+                Generation {e.generation}{' '}
+                <span className={`badge ${e.status}`}>{e.status}</span>
+              </span>
+              <span className="muted small">{e.variants.length} variants</span>
+            </Link>
           ))}
-        </ul>
-      </section>
+        </div>
+      )}
     </div>
   );
 }

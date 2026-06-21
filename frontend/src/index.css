@@ -1155,3 +1155,126 @@ button.big {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ---------- products ---------- */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+.page-head h1 {
+  font-size: 26px;
+  margin: 0 0 4px;
+}
+.page-head.tight {
+  margin-top: 6px;
+}
+.page-head.tight h2 {
+  margin: 0;
+  font-size: 18px;
+}
+.add-form {
+  display: flex;
+  flex-direction: column;
+}
+.add-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+.add-form button {
+  align-self: flex-start;
+  margin-top: 16px;
+}
+.empty {
+  text-align: center;
+  padding: 28px;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.product-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+.product-card:hover {
+  border-color: var(--accent);
+}
+.product-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  flex: none;
+  background: rgba(var(--violet-rgb), 0.16);
+  color: var(--accent-soft);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.product-info strong {
+  color: var(--ink);
+}
+.product-info .small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.product-card .price {
+  color: var(--white);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.product-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.product-hero h1 {
+  font-size: 24px;
+  margin: 0 0 4px;
+}
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.exp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 14px 18px;
+}
+.exp-row:hover {
+  border-color: var(--accent);
+}
+.exp-gen {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
