@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { api, type Experiment, type Product } from '../api';
+import { ArrowLeftIcon } from '../icons/ArrowLeftIcon';
 
 export function ProductPage() {
   const { id } = useParams<{ id: string }>();
@@ -43,7 +44,8 @@ export function ProductPage() {
   return (
     <div className="page">
       <Link to="/products" className="back">
-        ← Products
+        <ArrowLeftIcon />
+        Products
       </Link>
 
       <section className="card product-hero">
