@@ -1,9 +1,11 @@
-import { Navigate, Link, Route, Routes } from 'react-router-dom';
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import { useAuth } from './auth';
 import { Logo } from './icons/Logo';
+import { GridIcon } from './icons/GridIcon';
 import { BoxIcon } from './icons/BoxIcon';
 import { LandingPage } from './pages/LandingPage';
 import { LoginPage } from './pages/LoginPage';
+import { OverviewPage } from './pages/OverviewPage';
 import { ProductsPage } from './pages/ProductsPage';
 import { ProductPage } from './pages/ProductPage';
 import { ExperimentPage } from './pages/ExperimentPage';
@@ -17,10 +19,14 @@ function Layout({ children }: { children: React.ReactNode }) {
           <Logo size={24} />
         </div>
         <nav className="side-nav">
-          <Link to="/dashboard" className="side-link active">
+          <NavLink to="/dashboard" end className="side-link">
+            <GridIcon />
+            Dashboard
+          </NavLink>
+          <NavLink to="/products" className="side-link">
             <BoxIcon />
             Products
-          </Link>
+          </NavLink>
         </nav>
         <div className="sidebar-foot">
           <div className="side-account">
@@ -58,6 +64,14 @@ export default function App() {
       />
       <Route
         path="/dashboard"
+        element={
+          <Protected>
+            <OverviewPage />
+          </Protected>
+        }
+      />
+      <Route
+        path="/products"
         element={
           <Protected>
             <ProductsPage />

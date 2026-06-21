@@ -42,7 +42,7 @@ export function ProductPage() {
 
   return (
     <div className="page">
-      <Link to="/dashboard" className="back">
+      <Link to="/products" className="back">
         ← Products
       </Link>
 

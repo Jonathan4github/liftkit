@@ -1278,3 +1278,15 @@ button.big {
   align-items: center;
   gap: 10px;
 }
+.stat-cards.four {
+  grid-template-columns: repeat(4, 1fr);
+}
+.alink {
+  color: var(--accent);
+  font-weight: 600;
+}
+.overview-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
