@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:14
+    container_name: liftkit-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: liftkit
+      POSTGRES_PASSWORD: liftkit
+      POSTGRES_DB: liftkit
+    ports:
+      - "5433:5432"
+    volumes:
+      - liftkit_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U liftkit -d liftkit"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  liftkit_pgdata:
