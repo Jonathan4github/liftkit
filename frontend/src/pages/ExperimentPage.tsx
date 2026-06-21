@@ -98,10 +98,6 @@ export function ExperimentPage() {
 
   return (
     <div className="exp">
-      <Link to={`/products/${experiment.productId}`} className="back">
-        ← Back to product
-      </Link>
-
       <section className="exp-card">
         <div className="exp-top">
           <div>
@@ -115,6 +111,9 @@ export function ExperimentPage() {
             <button onClick={generate} disabled={busy || !isRunning}>
               Generate variants
             </button>
+            <Link to={`/products/${experiment.productId}`} className="btn-ghost">
+              View Product ↗
+            </Link>
           </div>
         </div>
 
