@@ -11,8 +11,8 @@ type Strategy = (base: ProductSnapshot) => GeneratedVariant;
 
 const STRATEGIES: Strategy[] = [
   (b) => ({
-    title: `${b.title} — Limited Stock`,
-    description: `${b.description} Selling fast — only a few left at this price.`,
+    title: `${b.title} - Limited Stock`,
+    description: `${b.description} Selling fast - only a few left at this price.`,
     price: round2(b.price * 1.05),
     rationale: 'Scarcity framing: urgency and a small price lift to test willingness to pay.',
   }),
@@ -23,7 +23,7 @@ const STRATEGIES: Strategy[] = [
     rationale: 'Social proof: lead with popularity to build trust at the same price.',
   }),
   (b) => ({
-    title: `${b.title} — Best Value`,
+    title: `${b.title} - Best Value`,
     description: `${b.description} Get more for less today.`,
     price: round2(b.price * 0.95 - 0.01),
     rationale: 'Value framing: a small discount with a charm price ending to lift conversion.',
@@ -35,7 +35,7 @@ const STRATEGIES: Strategy[] = [
     rationale: 'Premium positioning: higher price to test a quality-seeking segment.',
   }),
   (b) => ({
-    title: `${b.title} — Free Shipping`,
+    title: `${b.title} - Free Shipping`,
     description: `${b.description} Ships free, no minimum.`,
     price: b.price,
     rationale: 'Offer framing: a shipping perk to reduce checkout hesitation.',
