@@ -1,20 +1,12 @@
 import { Link } from 'react-router-dom';
-
-function Logo({ size = 26 }: { size?: number }) {
-  return (
-    <span className="logo">
-      <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="2" y="13" width="4.5" height="9" rx="1.5" fill="#a78bff" />
-        <rect x="9.75" y="7" width="4.5" height="15" rx="1.5" fill="#8b5cff" />
-        <rect x="17.5" y="2" width="4.5" height="20" rx="1.5" fill="#6d3bff" />
-      </svg>
-      <span className="logo-word">Liftkit</span>
-    </span>
-  );
-}
+import { Logo } from '../icons/Logo';
+import { SparklesIcon } from '../icons/SparklesIcon';
+import { BarChartIcon } from '../icons/BarChartIcon';
+import { RefreshIcon } from '../icons/RefreshIcon';
+import { LockIcon } from '../icons/LockIcon';
 
 const VARIANTS = [
-  { k: 'A', tag: 'Baseline', visitors: '6,108', ctr: '7.17%', cart: '2.71%', imp: '—', prob: '—', status: 'Baseline', color: '#8b5cff' },
+  { k: 'A', tag: 'Baseline', visitors: '6,108', ctr: '7.17%', cart: '2.71%', imp: '-', prob: '-', status: 'Baseline', color: '#8b5cff' },
   { k: 'B', visitors: '6,215', ctr: '8.36%', cart: '3.15%', imp: '+16.2%', prob: '78%', status: 'Challenger', color: '#3a7bd5', impUp: true },
   { k: 'C', visitors: '6,045', ctr: '9.21%', cart: '3.72%', imp: '+37.3%', prob: '98.6%', status: 'Leading', color: '#38d39f', impUp: true, leading: true },
   { k: 'D', visitors: '6,023', ctr: '6.89%', cart: '2.41%', imp: '-11.1%', prob: '12%', status: 'Challenger', color: '#f4b740', impDown: true },
@@ -120,7 +112,7 @@ function DashboardPreview() {
           <div className="ai-gen-row">
             <span>
               <b>AI Generation</b>
-              <span className="muted small"> — Generating new variants…</span>
+              <span className="muted small"> - Generating new variants…</span>
             </span>
             <span className="muted small">✶ Powered by Claude</span>
           </div>
@@ -134,10 +126,26 @@ function DashboardPreview() {
 }
 
 const FEATURES = [
-  ['AI-Powered Variants', 'Claude generates compelling product page variants that convert.'],
-  ['Statistical Confidence', 'Built-in significance testing ensures winners are real, not random.'],
-  ['Auto-Optimize', 'Winners get promoted automatically. The engine never stops improving.'],
-  ['Privacy First', '100% anonymous visitor data. No cookies. No tracking.'],
+  {
+    Icon: SparklesIcon,
+    title: 'AI-Powered Variants',
+    body: 'Claude generates compelling product page variants that convert.',
+  },
+  {
+    Icon: BarChartIcon,
+    title: 'Statistical Confidence',
+    body: 'Built-in significance testing ensures winners are real, not random.',
+  },
+  {
+    Icon: RefreshIcon,
+    title: 'Auto-Optimize',
+    body: 'Winners get promoted automatically. The engine never stops improving.',
+  },
+  {
+    Icon: LockIcon,
+    title: 'Privacy First',
+    body: '100% anonymous visitor data. No cookies. No tracking.',
+  },
 ];
 
 export function LandingPage() {
@@ -145,12 +153,6 @@ export function LandingPage() {
     <div className="landing">
       <nav className="landing-nav">
         <Logo />
-        <div className="nav-links">
-          <span>Product</span>
-          <span>How It Works</span>
-          <span>Pricing</span>
-          <span>Docs</span>
-        </div>
         <div className="nav-cta">
           <Link to="/login" className="nav-signin">Sign in</Link>
           <Link to="/login">
@@ -167,15 +169,14 @@ export function LandingPage() {
             <span className="grad">converting</span> page.
           </h1>
           <p className="lede">
-            Liftkit uses AI to generate, test, and optimize product page
-            variants—so you get more clicks, more carts, and more revenue,
-            automatically.
+            Liftkit writes new versions of your product pages, tests them on
+            real shoppers, and keeps whatever sells best. You get more carts and
+            less guesswork, on autopilot.
           </p>
           <div className="hero-cta">
             <Link to="/login">
               <button className="primary big">Start Testing Now →</button>
             </Link>
-            <span className="how">See How It Works ▶</span>
           </div>
           <div className="builtfor">
             <span className="muted small">BUILT FOR MODERN E-COMMERCE</span>
@@ -192,9 +193,11 @@ export function LandingPage() {
       </section>
 
       <section className="features">
-        {FEATURES.map(([title, body]) => (
+        {FEATURES.map(({ Icon, title, body }) => (
           <div key={title} className="feature">
-            <div className="feature-icon" />
+            <div className="feature-icon">
+              <Icon />
+            </div>
             <h4>{title}</h4>
             <p className="muted">{body}</p>
           </div>

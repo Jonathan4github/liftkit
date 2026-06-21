@@ -1,5 +1,8 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import { useAuth } from './auth';
+import { Logo } from './icons/Logo';
+import { GridIcon } from './icons/GridIcon';
+import { BoxIcon } from './icons/BoxIcon';
 import { LandingPage } from './pages/LandingPage';
 import { LoginPage } from './pages/LoginPage';
 import { ProductsPage } from './pages/ProductsPage';
@@ -9,17 +12,32 @@ import { ExperimentPage } from './pages/ExperimentPage';
 function Layout({ children }: { children: React.ReactNode }) {
   const { email, logout } = useAuth();
   return (
-    <div className="app">
-      <header className="topbar">
-        <span className="brand-sm">liftkit</span>
-        <div className="topbar-right">
-          <span className="muted">{email}</span>
+    <div className="shell">
+      <aside className="sidebar">
+        <div className="sidebar-logo">
+          <Logo size={24} />
+        </div>
+        <nav className="side-nav">
+          <NavLink to="/dashboard" end className="side-link">
+            <GridIcon />
+            Dashboard
+          </NavLink>
+          <NavLink to="/dashboard" className="side-link">
+            <BoxIcon />
+            Products
+          </NavLink>
+        </nav>
+        <div className="sidebar-foot">
+          <div className="side-account">
+            <span className="avatar">{(email ?? '?')[0].toUpperCase()}</span>
+            <span className="side-email">{email}</span>
+          </div>
           <button className="link" onClick={logout}>
             Sign out
           </button>
         </div>
-      </header>
-      <main className="content">{children}</main>
+      </aside>
+      <main className="shell-main">{children}</main>
     </div>
   );
 }

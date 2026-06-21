@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState, type SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { api, type Product } from '../api';
 
@@ -20,7 +20,7 @@ export function ProductsPage() {
     load();
   }, []);
 
-  const create = async (e: FormEvent) => {
+  const create = async (e: SyntheticEvent) => {
     e.preventDefault();
     setError(null);
     setBusy(true);

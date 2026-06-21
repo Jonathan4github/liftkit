@@ -50,7 +50,7 @@ export function ProductPage() {
         <h2>{product ? product.title : 'Product'}</h2>
         {product && (
           <p className="muted">
-            ${product.price} — {product.description}
+            ${product.price} - {product.description}
           </p>
         )}
         <button onClick={start} disabled={busy || hasRunning}>
