@@ -1302,8 +1302,55 @@ button.big {
   color: var(--accent);
   font-weight: 600;
 }
-.overview-meta {
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 14px;
+}
+.ov-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+.ov-card:hover {
+  border-color: var(--accent);
+}
+.ov-card-head {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
+}
+.ov-card-head strong {
+  color: var(--ink);
+  font-size: 15px;
+}
+.ov-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.ov-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ov-stats b {
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 700;
+}
+.ov-stats .up {
+  color: var(--success);
+}
+.ov-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-faint);
+  padding-top: 12px;
 }

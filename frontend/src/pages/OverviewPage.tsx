@@ -8,7 +8,11 @@ interface RunningRow {
   exp: ExpWithProduct;
   visitors: number;
   hasWinner: boolean;
+  bestConversion: number;
+  uplift: number;
 }
+
+const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
 
 export function OverviewPage() {
   const [loading, setLoading] = useState(true);
@@ -36,11 +40,20 @@ export function OverviewPage() {
           runningExps.map((e) => api.stats(e.id)),
         );
         setRunning(
-          runningExps.map((exp, i) => ({
-            exp,
-            visitors: stats[i].variants.reduce((a, v) => a + v.views, 0),
-            hasWinner: Boolean(stats[i].significance?.isSignificant),
-          })),
+          runningExps.map((exp, i) => {
+            const st = stats[i];
+            const control = st.variants.find((v) => v.isControl);
+            const best = st.significance
+              ? st.variants.find((v) => v.id === st.significance!.bestChallengerId)
+              : null;
+            return {
+              exp,
+              visitors: st.variants.reduce((a, v) => a + v.views, 0),
+              hasWinner: Boolean(st.significance?.isSignificant),
+              bestConversion: best?.conversionRate ?? control?.conversionRate ?? 0,
+              uplift: st.significance?.uplift ?? 0,
+            };
+          }),
         );
       } catch (e) {
         setError((e as Error).message);
@@ -105,21 +118,43 @@ export function OverviewPage() {
               </p>
             </div>
           ) : (
-            <div className="exp-list">
+            <div className="overview-grid">
               {running.map((r) => (
                 <Link
                   key={r.exp.id}
                   to={`/experiments/${r.exp.id}`}
-                  className="exp-row"
+                  className="ov-card"
                 >
-                  <span className="exp-gen">
+                  <div className="ov-card-head">
                     <strong>{r.exp.productTitle}</strong>
                     <span className="badge running">Gen {r.exp.generation}</span>
-                  </span>
-                  <span className="muted small overview-meta">
-                    {r.visitors.toLocaleString()} visitors
-                    {r.hasWinner && <span className="lead-badge">winner ready</span>}
-                  </span>
+                  </div>
+
+                  <div className="ov-stats">
+                    <div>
+                      <span className="muted small">Visitors</span>
+                      <b>{r.visitors.toLocaleString()}</b>
+                    </div>
+                    <div>
+                      <span className="muted small">Best conversion</span>
+                      <b>{pct(r.bestConversion)}</b>
+                    </div>
+                    <div>
+                      <span className="muted small">Lift vs control</span>
+                      <b className={r.uplift > 0 ? 'up' : ''}>
+                        {r.uplift > 0 ? `+${pct(r.uplift)}` : '—'}
+                      </b>
+                    </div>
+                  </div>
+
+                  <div className="ov-foot">
+                    {r.hasWinner ? (
+                      <span className="lead-badge">Winner ready</span>
+                    ) : (
+                      <span className="muted small">Collecting data…</span>
+                    )}
+                    <span className="alink">View experiment →</span>
+                  </div>
                 </Link>
               ))}
             </div>
