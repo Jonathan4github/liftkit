@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ExperimentStatus {
+  running
+  finished
+}
+
+enum EventType {
+  view
+  click
+  add_to_cart
+}
+
+model Merchant {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  price       Decimal  @db.Decimal(10, 2)
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  merchantId String
+  merchant   Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+
+  experiments Experiment[]
+}
+
+model Experiment {
+  id         String           @id @default(cuid())
+  status     ExperimentStatus @default(running)
+  generation Int              @default(1)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  variants Variant[]
+}
+
+model Variant {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  price       Decimal  @db.Decimal(10, 2)
+  isControl   Boolean  @default(false)
+  rationale   String?
+  createdAt   DateTime @default(now())
+
+  experimentId String
+  experiment   Experiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+
+  events Event[]
+}
+
+model Event {
+  id        String    @id @default(cuid())
+  visitorId String
+  type      EventType
+  createdAt DateTime  @default(now())
+
+  variantId String
+  variant   Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@index([variantId, type])
+}
