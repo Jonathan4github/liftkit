@@ -1302,55 +1302,25 @@ button.big {
   color: var(--accent);
   font-weight: 600;
 }
-.overview-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-  gap: 14px;
-}
-.ov-card {
+.exp-tabs {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
-  background: var(--panel);
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.exp-tab {
+  background: var(--panel-2);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px 20px;
+  border-radius: 9px;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
 }
-.ov-card:hover {
-  border-color: var(--accent);
-}
-.ov-card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-.ov-card-head strong {
+.exp-tab:hover {
   color: var(--ink);
-  font-size: 15px;
 }
-.ov-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-.ov-stats > div {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.ov-stats b {
-  color: var(--white);
-  font-size: 16px;
-  font-weight: 700;
-}
-.ov-stats .up {
-  color: var(--success);
-}
-.ov-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid var(--border-faint);
-  padding-top: 12px;
+.exp-tab.active {
+  background: rgba(var(--violet-rgb), 0.16);
+  border-color: var(--accent);
+  color: var(--accent-soft);
 }
