@@ -40,8 +40,8 @@ export function OverviewPage() {
           <h1>Dashboard</h1>
           <p className="muted">Your live experiments.</p>
         </div>
-        <Link to="/products">
-          <button className="primary">View products</button>
+        <Link to="/products" className="btn-ghost">
+          View Products ↗
         </Link>
       </div>
 
