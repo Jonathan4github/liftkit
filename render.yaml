@@ -1,0 +1,36 @@
+# Render Blueprint. The Postgres DB lives on Neon (set DATABASE_URL by hand below).
+# After the first deploy, fill the cross-references: the API's FRONTEND_URL = the web URL,
+# and the web app's VITE_API_URL = the API URL, then redeploy both.
+services:
+  - type: web
+    name: liftkit-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npx prisma generate && npx prisma migrate deploy && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: DATABASE_URL # Neon connection string, must end with ?sslmode=require
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: AI_MODE
+        value: fake
+      - key: FRONTEND_URL # set to the liftkit-web URL after it deploys
+        sync: false
+
+  - type: web
+    name: liftkit-web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL # set to the liftkit-api URL after it deploys
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
